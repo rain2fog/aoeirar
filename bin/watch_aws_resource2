@@ -1,0 +1,38 @@
+#!/usr/bin/ruby
+# Created by : Alex Xu
+# Created at : 20150522
+# Reversion : 1.4
+# Descrition : this script will watch the AWS resource including EC2,RDS,S3,Route53,ELB.
+#   This script depand on the tool aws (you can install this tool by : pip install awscli)
+require 'rubygems'
+require 'json'
+require 'net/smtp'
+require 'fileutils'
+require 'pathname'
+require 'logger'
+require 'English'
+
+#$LOAD_PATH << '.'
+$LOAD_PATH << File.expand_path(File.dirname(__FILE__))+"/../libs"
+require 'aws2'
+
+OPS=['user1@example.com','user2@example.com']
+TEAMLEADER=['boss1@example.com']
+ALL=OPS+TEAMLEADER
+
+$log=Logger.new(File.expand_path(File.dirname(__FILE__))+"/../logs/aws.log")
+REGION=["us-west-1","us-west-2","us-east-1","ap-northeast-1","ap-southeast-1"]
+USER_GROUP=["AISG"]
+
+
+ec2=EC2.new
+rds=RDS.new
+s3=S3.new
+route53=ROUTE53.new
+elb=ELB.new
+rds.judgment(rds.get_all_rds_info,rds.fetch_snapshot)
+s3.judgment(s3.get_all_s3_info,s3.fetch_snapshot)
+route53.judgment(route53.get_route53_zone_info,route53.fetch_snapshot)
+ec2.judgment(ec2.get_all_ec2_info,ec2.fetch_snapshot)
+elb.judgment(elb.get_all_elb_info,elb.fetch_snapshot)
+

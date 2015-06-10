@@ -1,0 +1,34 @@
+#!/usr/bin/ruby
+# Created by : Alex Xu
+# Created at : 20150525
+# Reversion : 1.5
+# Descrition : this script will watch the AWS/Aliyun IT Infrastructure resource including EC2,RDS,S3,Route53,ELB,ECS,SLB
+#   This script depand on the tool aws (you can install this tool by : pip install awscli)
+#   This script depand on the tool aliyuncli (you can install this tool by : pip install aliyuncli)
+
+require 'rubygems'
+require 'json'
+require 'net/smtp'
+require 'fileutils'
+require 'pathname'
+require 'logger'
+require 'English'
+$LOAD_PATH << File.expand_path(File.dirname(__FILE__))+"/../libs"
+require 'aliyun'
+
+#$LOAD_PATH << '.'
+
+OPS=['user1@example.com']
+TEAMLEADER=['boss1@example.com']
+ALL=OPS+TEAMLEADER
+
+root=File.expand_path(File.dirname(__FILE__))+"/../"
+Dir.mkdir(root+'tmp') unless File.exists?(root+'tmp')
+Dir.mkdir(root+'logs') unless File.exists?(root+'logs')
+
+#$log=Logger.new(File.expand_path(File.dirname(__FILE__))+"/../logs/aws.log")
+
+REGION=["cn-shenzhen","cn-qingdao","cn-beijing","cn-shanghai-eu13-a01","cn-hongkong","cn-hangzhou","us-west-1"]
+ecs=Aliyun::ECS.new
+$log=Logger.new(File.expand_path(File.dirname(__FILE__))+"/../logs/aliyun.log")
+ecs.judgment(ecs.get_all_ecs_info,ecs.fetch_snapshot)
