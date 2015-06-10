@@ -9,4 +9,4 @@ AWS including : EC2 RDS ELB S3 Route53
 Aliiyun including : ECS
 
 # how to use it 
-add the script in bin in your crontab
+Add the scripts in bin to your crontab
