@@ -7,3 +7,6 @@ Now support AWS ( Amazon Web Service ) and Aliyun ( Chinese Infrastructure Servi
 AWS including : EC2 RDS ELB S3 Route53
 
 Aliiyun including : ECS
+
+# how to use it 
+add the script in bin in your crontab
